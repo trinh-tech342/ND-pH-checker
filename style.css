@@ -1,0 +1,123 @@
+:root {
+    --primary: #1a5f7a;
+    --success: #2d8a4e;
+    --danger: #eb455f;
+    --bg: #f0f2f5;
+    --border: #dcdde1;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    margin: 0; padding: 20px;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--bg);
+    padding-bottom: 15px;
+}
+
+h1 { font-size: 1.5rem; color: var(--primary); margin: 0; }
+
+.toolbar button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 10px;
+    transition: 0.2s;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-success { background: var(--success); color: white; }
+.btn-primary:hover { opacity: 0.9; }
+
+.table-wrapper { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th {
+    background: #f8f9fa;
+    color: #444;
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 2px solid var(--border);
+    text-align: left;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Tùy chỉnh các input trong ô table */
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 5px rgba(26,95,122,0.2);
+}
+
+tr:hover { background-color: #fcfcfc; }
+tr:hover input, tr:hover select { background: white; border-color: #ddd; }
+
+.btn-del {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+/* Làm cho ô input productName rộng hơn một chút */
+.productName {
+    min-width: 180px;
+    font-weight: 500;
+}
+
+.saved-row {
+    background-color: #f0fff4 !important;
+    transition: background-color 0.5s ease;
+}
+
+.saved-row input, .saved-row select {
+    color: #2d8a4e;
+    pointer-events: none; /* Khóa dòng sau khi đã lưu thành công */
+}
+.idRecipe {
+    min-width: 120px;
+}
+
+/* Thêm hiệu ứng cho ô bị khóa sau khi lưu */
+input[readonly] {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    cursor: default;
+}
