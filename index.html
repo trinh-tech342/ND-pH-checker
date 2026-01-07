@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Quản Lý pH Atisô</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <datalist id="productSuggestions">
+        <option value="Cao Atisô Đặc 100% Nguyên Chất">
+        <option value="Cao Atisô Nước Ống Bẻ">
+        <option value="Cao Atisô Thanh Nhiệt">
+        <option value="Cao Atisô Lá Khô Tuyển Chọn">
+        <option value="Cao Atisô Mật Ong">
+    </datalist>
+    <datalist id="recipeSuggestions">
+    <option value="REC-2024-A">
+    <option value="REC-2024-B">
+    <option value="REC-SPECIAL-01">
+    </datalist>
+    <div class="main-container">
+        <header>
+            <h1><span class="icon">🌿</span> QUẢN LÝ CHẤT LƯỢNG CAO ATISÔ</h1>
+            <div class="toolbar">
+                <button id="addRowBtn" class="btn-primary">+ Thêm lô mới</button>
+                <button id="exportBtn" class="btn-success">Xuất Excel (CSV)</button>
+            </div>
+        </header>
+
+        <div class="table-wrapper">
+            <table id="mainTable">
+                <thead>
+                    <tr>
+                        <th>Ngày kiểm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lô (Lot)</th>
+                        <th>Giá trị pH</th>
+                        <th>Ngày SX</th>
+                        <th>Hạn dùng</th>
+                        <th>Mã đơn (Recipe)</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
