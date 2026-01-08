@@ -1,61 +1,173 @@
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzy-h27uKYF_EASiYEy10IGELrqO_Q9W-0_YUP6jFwCxJFA7nrKPaCtYM6hzvRDcZmMtA/exec';
-function createRow() {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td><input type="date" class="checkDate"></td>
-        <td><input type="text" class="productName" list="productSuggestions" placeholder="Tên SP..."></td>
-        <td><input type="text" class="lotNo" placeholder="Lô..."></td>
-        <td><input type="number" class="pHValue" step="0.01"></td>
-        <td><input type="date" class="issueDate"></td>
-        <td><input type="date" class="expDate"></td>
-        <td><input type="text" class="idRecipe" list="recipeSuggestions" placeholder="Mã đơn..."></td>
-        <td><button class="btn-save" onclick="saveRow(this)">Lưu</button></td>
-    `;
-    document.getElementById('tableBody').appendChild(row);
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --primary-color: #2d8a4e; /* Xanh Atisô chính */
+    --primary-hover: #236b3d;
+    --bg-color: #f4f7f6;
+    --text-color: #333;
+    --border-color: #ddd;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-async function saveRow(btn) {
-    const row = btn.closest('tr');
-    const inputs = row.querySelectorAll('input');
-    const data = {
-        checkDate: row.querySelector('.checkDate').value,
-        productName: row.querySelector('.productName').value,
-        lotNo: row.querySelector('.lotNo').value,
-        pHValue: row.querySelector('.pHValue').value,
-        issueDate: row.querySelector('.issueDate').value,
-        expDate: row.querySelector('.expDate').value,
-        idRecipe: row.querySelector('.idRecipe').value
-    };
-
-    if (!data.checkDate || !data.productName || !data.pHValue) {
-        alert("Thiếu thông tin quan trọng!"); return;
-    }
-
-    btn.innerText = "...";
-    btn.disabled = true;
-
-    try {
-        await fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify(data)
-        });
-        
-        // Hiệu ứng hoàn tất
-        btn.innerText = "OK ✓";
-        btn.style.background = "#2d8a4e";
-        row.style.background = "#f0fff4";
-        inputs.forEach(i => i.readOnly = true);
-
-        // TỰ ĐỘNG THÊM DÒNG MỚI KHI LƯU XONG
-        createRow();
-        
-    } catch (e) {
-        alert("Lỗi!");
-        btn.disabled = false;
-        btn.innerText = "Lưu";
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-window.onload = () => createRow(); // Bắt đầu với 1 dòng
-document.getElementById('addRowBtn').addEventListener('click', createRow);
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+/* --- Header & Toolbar --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--bg-color);
+    padding-bottom: 15px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+h1 .icon {
+    margin-right: 10px;
+    font-size: 1.8rem;
+}
+
+.toolbar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* --- Buttons --- */
+button, .btn-link {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-link {
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+.btn-link:hover {
+    background-color: #cbd5e1;
+}
+
+.btn-save {
+    background-color: #3182ce;
+    color: white;
+    width: 100%;
+}
+
+.btn-save:hover {
+    background-color: #2b6cb0;
+}
+
+/* --- Table Styles --- */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #64748b;
+    text-align: left;
+    padding: 12px 10px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--bg-color);
+}
+
+td {
+    padding: 10px 5px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+/* --- Input Styles --- */
+input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    background-color: #f9fffb;
+}
+
+input[readonly] {
+    background-color: transparent;
+    border-color: transparent;
+    color: #2d3748;
+    font-weight: 500;
+}
+
+/* Định dạng riêng cho pH Value */
+.pHValue {
+    font-weight: bold;
+    color: #2d3748;
+    text-align: center;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .main-container {
+        padding: 15px;
+    }
+}
